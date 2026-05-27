@@ -1,3 +1,6 @@
+// Contestant ID: #000000
+// Event: (335) C++ Programming
+
 #include <iostream>
 #include <string>
 #include <vector>
