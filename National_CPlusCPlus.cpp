@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <cctype>
 
 // Namespace for better encapsulation
 namespace NationalCPlusPlus {
@@ -117,6 +118,15 @@ namespace NationalCPlusPlus {
                 customers.emplace_back("Alice", "Johnson", "alice.johnson@example.com", "555-0103", 200);
                 customers.emplace_back("Bob", "Brown", "bob.brown@example.com", "555-0104", 250);
                 customers.emplace_back("Charlie", "Davis", "charlie.davis@example.com", "555-0105", 300);
+
+                std::cout << "--- Customer Details ---\n";
+
+                for (const auto& customer : customers) {
+                    std::cout << "Name: " << customer.firstName << " " << customer.lastName << '\n';
+                    std::cout << "Email: " << customer.email << '\n';
+                    std::cout << "Phone Number: " << customer.phoneNumber << '\n';
+                    std::cout << "Loyalty Points: " << customer.loyaltyPoints << "\n" << std::endl; 
+                }
             }
         
             static void createAndDisplayEmployees() { 
@@ -126,6 +136,15 @@ namespace NationalCPlusPlus {
                 employees.emplace_back("Jim", "Halpert", "jim.halpert@dundermifflin.com", "555-9012", 3);
                 employees.emplace_back("Pam", "Beesly", "pam.beesly@dundermifflin.com", "555-3456", 3);
                 employees.emplace_back("Kevin", "Malone", "kevin.malone@dundermifflin.com", "555-7890", 4);
+
+                std::cout << "--- Employee Details ---\n";
+
+                for (const auto& employee : employees) {
+                    std::cout << "Name: " << employee.firstName << " " << employee.lastName << '\n';
+                    std::cout << "Email: " << employee.email << '\n';
+                    std::cout << "Phone Number: " << employee.phoneNumber << '\n';
+                    std::cout << "Position: " << employee.getPositionName() << "\n" << std::endl; 
+                }
             }
         
             static void buildAndTraverseBinaryTree() { 
@@ -154,15 +173,81 @@ namespace NationalCPlusPlus {
             }
 
             static void countWordsInString() { 
-                
+                std::string sentence;
+                while (true) {
+                    std::cout << "Enter a sentence: " << std::endl;
+
+                    if (std::getline(std::cin >> std::ws, sentence) && !sentence.empty()) {
+                        break;
+                    }
+
+                    std::cout << "Sentence must contain something" << '\n' << std::endl;
+                }
+
+                int count = 0;
+
+                // letters and numbers can make a word
+                bool hasFoundLetterOrNumber = false;
+
+                for (int back = 0; back < sentence.size(); back++) {
+                    if (std::isalnum(sentence.at(back))) {
+                        hasFoundLetterOrNumber = true;
+                    }
+
+                    if (sentence.at(back) == ' ') {
+                        if (hasFoundLetterOrNumber) {
+                            count++;
+                        }
+                        hasFoundLetterOrNumber = false;
+                    }
+                }
+
+                if (hasFoundLetterOrNumber) count++;
+
+                std::cout << "Amount of words: " << std::to_string(count) << "\n" << std::endl;
             }
 
             static void countDigits() { 
-                
+                int val;
+                while (true) {
+                    std::cout << "Enter an integer: " << std::endl;
+
+                    if (std::cin >> val && val > 0) {
+                        break;
+                    }
+
+                    std::cout << "Input must be an integer and greater than 0\n" << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                }
+
+                int numOfZeros = 0;
+                int numOfEvens = 0;
+                int numOfOdds = 0;
+                int digit;
+
+                while (val > 0) {
+                    digit = val % 10;
+
+                    if (digit == 0) {
+                        numOfZeros++;
+                    } else if (digit % 2 == 0) {
+                        numOfEvens++;
+                    } else {
+                        numOfOdds++;
+                    }
+
+                    val /= 10;   
+                }
+
+                std::cout << "--- Digit Analysis ---\n";
+                std::cout << "Zero: " << std::to_string(numOfZeros) << '\n';
+                std::cout << "Even digits (excluding zero): " << std::to_string(numOfEvens) << '\n';
+                std::cout << "Odd digits: " << std::to_string(numOfOdds) << "\n" << std::endl;
             }
 
             static void analyzeString() { 
-            
+                
             }
 
             static void convertTemperature() { 
@@ -190,7 +275,9 @@ int main() {
                 break;
             }
 
-            menu.menuItems[menuVal].menuFunction();
+            menu.menuItems[menuVal - 1].menuFunction();
+            system("PAUSE");
+            system("CLS");
             continue;
         }
 
@@ -200,7 +287,7 @@ int main() {
         std::cin.ignore(1000, '\n');
     }
 
-    std::cout << "Goodbye!";
+    std::cout << "Goodbye!" << std::endl;
 
     return 0;
 }
