@@ -1,6 +1,7 @@
 // Contestant ID: #000000
 // Event: (335) C++ Programming
 
+// import libraries
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,6 +13,20 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+
+/*
+*** IMPORTANT NOTE ***
+
+This project was done based on a competition for BPA NLC 2026 C++ Programming Event.
+The assignment prompt was not available so I could only complete the tasks that I remember myself from the event.
+The functions that I do not remember what the task is I did not attempt.
+A base-version of this C++ file was available but only included base-values and class declarations.
+For the actual C++ everything is time based, so you want to go fast
+I wanted to take the time and use good programming practices to progam these challenges
+Even though I was incapable of doing the full prompt (unless I pay $40 to BPA for the prompt), I was still able to learn these things:
+Structs in c++, Chrono library, lambda funcions in c++, namespaces
+*/
+
 
 // Namespace for better encapsulation
 namespace NationalCPlusPlus {
@@ -68,6 +83,8 @@ namespace NationalCPlusPlus {
             }
     };
     
+
+    // don't remember these from the event
     struct TreeNode {
        
     };
@@ -99,6 +116,7 @@ namespace NationalCPlusPlus {
             std::vector<MenuItem> menuItems;
 
             Menu() {
+                // populate actual menu options to menuItems vector
                 menuItems.emplace_back("Option 1: Create and display 5 customers", []() { createAndDisplayCustomers(); });
                 menuItems.emplace_back("Option 2: Create and display 5 employees", []() { createAndDisplayEmployees(); });
                 menuItems.emplace_back("Option 3: Build and traverse a binary tree", []() { buildAndTraverseBinaryTree(); });
@@ -112,6 +130,7 @@ namespace NationalCPlusPlus {
             }
             
             static void createAndDisplayCustomers() {
+                // create vector of customers and populate
                 std::vector<Customer> customers;
                 customers.emplace_back("John", "Doe", "john.doe@example.com", "555-0101", 100);
                 customers.emplace_back("Jane", "Smith", "jane.smith@example.com", "555-0102", 150);
@@ -121,6 +140,7 @@ namespace NationalCPlusPlus {
 
                 std::cout << "--- Customer Details ---\n";
 
+                // for each customer display information
                 for (const auto& customer : customers) {
                     std::cout << "Name: " << customer.firstName << " " << customer.lastName << '\n';
                     std::cout << "Email: " << customer.email << '\n';
@@ -130,6 +150,7 @@ namespace NationalCPlusPlus {
             }
         
             static void createAndDisplayEmployees() { 
+                // create vector of customers and populate
                 std::vector<Employee> employees;
                 employees.emplace_back("Michael", "Scott", "michael.scott@dundermifflin.com", "555-1234", 1);
                 employees.emplace_back("Dwight", "Schrute", "dwight.schrute@dundermifflin.com", "555-5678", 2);
@@ -139,6 +160,7 @@ namespace NationalCPlusPlus {
 
                 std::cout << "--- Employee Details ---\n";
 
+                // for each employee display information
                 for (const auto& employee : employees) {
                     std::cout << "Name: " << employee.firstName << " " << employee.lastName << '\n';
                     std::cout << "Email: " << employee.email << '\n';
@@ -147,6 +169,7 @@ namespace NationalCPlusPlus {
                 }
             }
         
+            // dont remember what these were meant to do
             static void buildAndTraverseBinaryTree() { 
             
             }
@@ -156,9 +179,16 @@ namespace NationalCPlusPlus {
             }
 
             static void displayCurrentDateTime() { 
-                
+                auto now = std::chrono::system_clock::now();
+
+                std::time_t time_now = std::chrono::system_clock::to_time_t(now);
+                std::tm* local_time = std::localtime(&time_now);
+
+                // display time
+                std::cout << std::put_time(local_time, "%m-%d-%Y") << "\n" << std::endl;
             }
 
+            // dont remember what this was supposed to do
             static void manageAndDisplayComputerParts() { 
                 static ComputerPartsList partsList;
 
@@ -174,14 +204,16 @@ namespace NationalCPlusPlus {
 
             static void countWordsInString() { 
                 std::string sentence;
+
+                // repeat until valid response
                 while (true) {
-                    std::cout << "Enter a sentence: " << std::endl;
+                    std::cout << "Enter a sentence: ";
 
                     if (std::getline(std::cin >> std::ws, sentence) && !sentence.empty()) {
                         break;
                     }
 
-                    std::cout << "Sentence must contain something" << '\n' << std::endl;
+                    std::cout << "Sentence must contain something\n" << std::endl;
                 }
 
                 int count = 0;
@@ -190,27 +222,35 @@ namespace NationalCPlusPlus {
                 bool hasFoundLetterOrNumber = false;
 
                 for (int back = 0; back < sentence.size(); back++) {
+                    // if character at back is a letter or number
                     if (std::isalnum(sentence.at(back))) {
                         hasFoundLetterOrNumber = true;
                     }
 
+                    // if space at back
                     if (sentence.at(back) == ' ') {
+                        // if at least one number or letter since last space
                         if (hasFoundLetterOrNumber) {
                             count++;
                         }
+
+                        // reset flag
                         hasFoundLetterOrNumber = false;
                     }
                 }
 
                 if (hasFoundLetterOrNumber) count++;
 
+                // display amount of words for user
                 std::cout << "Amount of words: " << std::to_string(count) << "\n" << std::endl;
             }
 
             static void countDigits() { 
                 int val;
+
+                // repeat until valid response
                 while (true) {
-                    std::cout << "Enter an integer: " << std::endl;
+                    std::cout << "Enter an integer: ";
 
                     if (std::cin >> val && val > 0) {
                         break;
@@ -226,9 +266,12 @@ namespace NationalCPlusPlus {
                 int numOfOdds = 0;
                 int digit;
 
+                // iterate through each digit
                 while (val > 0) {
+                    // find the digit in the 1s place
                     digit = val % 10;
 
+                    // iterate counters
                     if (digit == 0) {
                         numOfZeros++;
                     } else if (digit % 2 == 0) {
@@ -237,21 +280,55 @@ namespace NationalCPlusPlus {
                         numOfOdds++;
                     }
 
+                    // shift each digit to the right
                     val /= 10;   
                 }
 
-                std::cout << "--- Digit Analysis ---\n";
+                std::cout << "\n--- Digit Analysis ---\n";
                 std::cout << "Zero: " << std::to_string(numOfZeros) << '\n';
                 std::cout << "Even digits (excluding zero): " << std::to_string(numOfEvens) << '\n';
                 std::cout << "Odd digits: " << std::to_string(numOfOdds) << "\n" << std::endl;
             }
 
-            static void analyzeString() { 
+            static void analyzeString() {
                 
             }
 
-            static void convertTemperature() { 
-                
+            
+            static void convertTemperature() {
+                std::string inputUnit;
+
+                // repeat until valid response
+                while (true) {
+                    std::cout << "Enter the input unit (F/C): ";
+
+                    if (std::getline(std::cin >> std::ws, inputUnit) && !inputUnit.empty() && (inputUnit == "F" || inputUnit == "C")) {
+                        break;
+                    }
+
+                    std::cout << "Unit must be in proper format (F/C)\n" << std::endl;
+                }
+
+                // repeat until valid response
+                double val;
+                while (true) {
+                    std::cout << "Enter the value: ";
+
+                    if (std::cin >> val) {
+                        break;
+                    }
+
+                    std::cout << "Input must be be a number\n" << std::endl;
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                }
+
+                // display correct conversion based on the input unit
+                if (inputUnit == "F") {
+                    std::cout << "Output: " << (val - 32.0) * (5.0 / 9.0) << " degrees Celsius\n" << std::endl;
+                } else {
+                    std::cout << "Output: " << val * (9.0 / 5.0) + 32.0 << " degrees Fahrenheit" << std::endl;
+                }
             }
 
             static void importAndSortProducts() {
@@ -262,31 +339,41 @@ namespace NationalCPlusPlus {
 } // namespace NationalCPlusPlus
 
 int main() {
+    system("CLS"); // clears screen (only works on WindowsOS)
     NationalCPlusPlus::Menu menu;
+
     int menuVal;
+    
+    // repeat until valid response
     while (true) {
+        // iterate through each item and print
         for (const auto& menuItem : menu.menuItems) {
             std::cout << menuItem.prompt << '\n';
         }
-        std::cout << "Option 0: Exit\n" << std::endl;
+
+        // print exit option
+        std::cout << "Option 0: Exit" << std::endl;
 
         if (std::cin >> menuVal && menuVal >= 0 && menuVal <= menu.menuItems.size()) {
             if (menuVal == 0) {
                 break;
             }
 
+            // run lambda function
             menu.menuItems[menuVal - 1].menuFunction();
-            system("PAUSE");
-            system("CLS");
+
+            system("PAUSE"); // wait for user to click enter (only works in WinowsOS)
+            system("CLS"); // clears screen (only works on WindowsOS)
             continue;
         }
 
-        system("CLS");
+        system("CLS"); // clears screen (only works on WindowsOS)
         std::cout << "Entered value must be an integer 0-10\n";
         std::cin.clear();
         std::cin.ignore(1000, '\n');
     }
 
+    // say goodbye to user
     std::cout << "Goodbye!" << std::endl;
 
     return 0;
