@@ -24,7 +24,7 @@ A base-version of this C++ file was available but only included base-values and 
 For the actual C++ everything is time based, so you want to go fast
 I wanted to take the time and use good programming practices to progam these challenges
 Even though I was incapable of doing the full prompt (unless I pay $40 to BPA for the prompt), I was still able to learn these things:
-Structs in c++, Chrono library, lambda funcions in c++, namespaces
+Structs in c++, Chrono library, lambda funcions in c++, namespaces, git and github
 */
 
 
