@@ -291,7 +291,46 @@ namespace NationalCPlusPlus {
             }
 
             static void analyzeString() {
-                
+                std::string inputString;
+
+                // repeat until valid response
+                while (true) {
+                    std::cout << "Enter a string: ";
+
+                    if (std::getline(std::cin >> std::ws, inputString) && !inputString.empty()) {
+                        break;
+                    }
+
+                    std::cout << "String must contain characters\n" << std::endl;
+                }
+
+                // set up counters
+                int vowels = 0;
+                int consonants = 0;
+                int spaces = 0;
+                int puncuation = 0;
+
+                for (char c : inputString) {                   
+                    if (std::isalpha(c)) {
+                        c = std::tolower(c);
+                        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'v') {
+                            vowels++;
+                        } else {
+                            consonants++;
+                        }
+                    } else if (std::isspace(c)) {
+                        spaces++;
+                    } else if (std::ispunct(c)) {
+                        puncuation++;
+                    }
+                }
+
+                // print information
+                std::cout << "\n--- String Analysis ---\n";
+                std::cout << "Vowels: " << std::to_string(vowels) << '\n';
+                std::cout << "Consonants: " << std::to_string(consonants) << '\n';
+                std::cout << "Spaces: " << std::to_string(spaces) << '\n';
+                std::cout << "Puncuation: " << std::to_string(puncuation) << std::endl;
             }
 
             
